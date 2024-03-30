@@ -10,4 +10,12 @@ $ conda activate glove
 $ pip install numpy
 # build executable
 $ make
+# train the model using sample data
+$ ./demo.sh
+
+# install libraries needed for plotting
+$ pip install scikit-learn
+$ pip install matplotlib
+$ pip install seaborn
+
 ```
