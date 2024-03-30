@@ -1,30 +1,21 @@
-import numpy as np
-from load_embeddings import load_glove_embeddings
-from sklearn.manifold import TSNE
 import matplotlib.pyplot as plt
+from common import find_distiguishing_embeddings_subset
 
-
-# Define the words for which you want to load embeddings
+# Assuming 'words_of_interest' and 'find_distiguishing_embeddings_subset' are defined as before
 words_of_interest = ['king', 'queen', 'prince', 'princess', 'man', 'woman', 'boy', 'girl']
+embeddings_subset = find_distiguishing_embeddings_subset(words_of_interest)
 
-# Load GloVe embeddings for the specified words
-words, embeddings = load_glove_embeddings('../vectors.txt', words_of_interest)
+# Use only the first two features for a 2D plot
+X = embeddings_subset[:, 0]  # Feature 1 (e.g., Royalty)
+Y = embeddings_subset[:, 1]  # Feature 2 (e.g., Gender)
 
-# Adjust the perplexity parameter based on the number of samples
-perplexity_value = min(30, len(words) - 1)  # Ensure perplexity is less than the number of samples
-
-# Perform dimensionality reduction using t-SNE with adjusted perplexity
-tsne = TSNE(n_components=2, perplexity=perplexity_value)
-
-# Make sure to pass only 'embeddings' to the fit_transform method
-reduced_embeddings = tsne.fit_transform(embeddings)
-
-# Plot the reduced embeddings
 plt.figure(figsize=(10, 6))
-plt.scatter(reduced_embeddings[:, 0], reduced_embeddings[:, 1])
+for i, word in enumerate(words_of_interest):
+    plt.scatter(X[i], Y[i], marker='o')
+    plt.text(X[i], Y[i], word, fontsize=9)
 
-# Annotate the points with the corresponding words
-for i, word in enumerate(words):
-    plt.annotate(word, (reduced_embeddings[i, 0], reduced_embeddings[i, 1]))
-
+plt.xlabel('Feature 1 (Royalty?)')
+plt.ylabel('Feature 2 (Gender?)')
+plt.title('2D Scatter Plot of Word Embeddings')
+plt.grid(True)
 plt.show()
