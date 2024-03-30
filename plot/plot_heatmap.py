@@ -65,8 +65,8 @@ embeddings_subset = embeddings[[words.index(word) for word in words_of_interest]
 
 # Create the heatmap for the selected features
 plt.figure(figsize=(10, 6))
-sns.heatmap(embeddings_subset, annot=True, fmt=".2f", cmap='coolwarm', 
-            xticklabels=['Royalty', 'Gender', 'Adulthood'], yticklabels=words_of_interest)
+sns.heatmap(embeddings_subset, annot=True, fmt=".4f", cmap='coolwarm', 
+            xticklabels=['Royalty?', 'Gender?', 'Adulthood?'], yticklabels=words_of_interest)
 
 plt.title('Heatmap of Selected Features for Selected Words')
 plt.xlabel('Feature')
